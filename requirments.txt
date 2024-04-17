@@ -1,0 +1,4 @@
+!conda install python==3.12.2
+!pip install langchain
+!pip install -U --quiet langchain-google-genai
+!pip install --upgrade deepl
