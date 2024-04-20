@@ -121,7 +121,7 @@ if "store" not in st.session_state:
 
 
 
-
+from LLM.gemini import gemini_response
 
 
 if user_input := st.chat_input("메시지를 입력해주세요."): # 1. input
@@ -131,51 +131,7 @@ if user_input := st.chat_input("메시지를 입력해주세요."): # 1. input
     # st.session_state["messages"].append(("user", user_input)) # 튜플형식으로 messages에 추가해 줌
     st.session_state["messages"].append(ChatMessage(role="user", content=user_input)) # 2. langchain을 사용하는 방식이 보기에 명확해보임
 
-
-    # # 3. LLM으로 답변 생성
-
-    # 모델 생성
-    LLM = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key=GOOGLE_API_KEY)
-
-    # 3. 프롬프트 생성
-    # prompt = ChatPromptTemplate.from_template("""
-    #                                           질문에 대하여 간결하게 답변해주세요
-    #                                           {Question}
-    #                                           """)
-
-    # 4. 프롬프트 만들기
-    prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", "질문에 대하여 간결하게 답변해 주세요."),
-            #대화 기록을 변수로 사용, history가 MessageHistory의 Key가 됨
-            MessagesPlaceholder(variable_name="history"),
-            ("human", "{Question}") # 사용자 질문 입력
-        ]
-    )
-
-    
-    chain = prompt | LLM
-
-    # 대화 저장
-    chain_with_memory = (RunnableWithMessageHistory(
-                            runnable=chain, # 실행할 Runnable 객체
-                            get_session_history=get_session_history, # 세션 기록을 가져오는 함수
-                            input_messages_key="Question", # 사용자 질문의 키
-                            history_messages_key="history" # 기록 메시지의 키
-                            )
-                        )
-
-
-    # response = chain.invoke({"Question":user_input})
-    response = chain_with_memory.invoke(
-
-        # 사용자 질문 LLM에 입력
-        {"Question": user_input},
-        # 세션 ID 설정 "abc123"을 전달합니다.
-        config={"configurable": {"session_id":"abc123"}}
-    )
-
-    output = response.content
+    output = gemini_response(user_input)
 
     # 3. AI의 답변
     with st.chat_message('assistant'): # 1. output
