@@ -10,7 +10,7 @@ from utils import get_session_history
 from persona.woman import persona
 from persona.test import trait
 
-GOOGLE_API_KEY='AIzaSyB4kcIgrsLQ20DMD5H-7enGWbxDDR-5FMo'
+GOOGLE_API_KEY=''
 
 trait = trait
 
