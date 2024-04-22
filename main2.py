@@ -64,7 +64,7 @@ if user_input := st.chat_input("메시지를 입력해주세요."): # 1. input
     from langchain.chains import LLMChain
 
 
-    GOOGLE_API_KEY='AIzaSyB4kcIgrsLQ20DMD5H-7enGWbxDDR-5FMo'
+    GOOGLE_API_KEY=''
 
     llm = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key=GOOGLE_API_KEY)
 
